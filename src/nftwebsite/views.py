@@ -16,7 +16,7 @@ views = Blueprint('views', '__name__')
 @views.route('/')
 @login_required
 def home():
-        return render_template('create.html', user=current_user)
+        return render_template('home.html', user=current_user)
 
 
 @views.route('/nft', methods=[ 'GET', 'POST'])
@@ -43,10 +43,9 @@ def nft():
                 print(name_of_nft)
                 cur.execute (" select info -> 'metaplex' -> 'metadataUri' from nft_information WHERE nft_addr = (%s)", (nft_address,))
                 nft_img_url = cur.fetchone()
-
+                print()
                 cur.execute (" select info -> 'mint'  from nft_information WHERE nft_addr = (%s)", (nft_address,))
                 nft_mint = cur.fetchone()
-                conn.commit()
                 return render_template('index.html', nm=name_of_nft[0], imgurl = nft_img_url[0], mint = nft_mint[0], user=current_user)
             else:
                 cur.execute("INSERT INTO nft_information (NFT_ADDR) VALUES (%s)", (nft_address,))

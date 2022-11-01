@@ -31,7 +31,11 @@ def login():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('auth.login'))
+    return redirect(url_for('auth.home'))
+
+@auth.route('/home')
+def home():
+    return render_template("home.html")
 
 @auth.route('/register', methods=['GET','POST'])
 def register():
@@ -58,7 +62,6 @@ def register():
             db.session.add(new_user)
             db.session.commit()
             login_user(new_user, remember=True)
-            flash('Account created!', category='success')
             return redirect(url_for('views.nft'))
 
     return render_template("register.html",user=current_user)

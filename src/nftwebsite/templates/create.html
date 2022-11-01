@@ -25,31 +25,38 @@
     }
 }
 ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-}
-
-li {
-  float: left;
-}
-
-li a {
-  display: block;
-  color: white;
-  text-align: center;
-  padding: 30px 30px;
-  font-size: 20px;
-  text-decoration: none;
-}
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+  
+  li {
+    float: left;
+  }
+  
+  li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 30px 30px;
+    font-size: 20px;
+    text-decoration: none;
+  }
+  
+  li a:hover{
+    text-decoration: none;
+    color: #3f6794;
+    transform: scale(1.1);
+    cursor: pointer;
+  }
     </style>
     <body>
         <header style="width: 100%; display: flex; margin-left: 40px; margin-top: 20px;">
             <ul>
                 <li style="text-transform: uppercase; font-weight: 800; font-size: 20px;">
                 <a href="http://127.0.0.1:5000/" style="color: #fff; text-decoration: none;">NFT-ADDRESS</a></li>
-                <li><a href="{{ url_for('auth.login') }}">Logout</a></li>
+                <li><a href="{{ url_for('auth.home') }}">Logout</a></li>
             </ul>
         </header>
 

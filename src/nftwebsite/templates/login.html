@@ -3,29 +3,16 @@
 <head>
 <title>Login page</title>
 
-{% with messages = get_flashed_messages(with_categories=true) %} {% if
-  messages %} {% for category, message in messages %} {% if category == 'error' %}
-  <div class="alert alert-danger alter-dismissable fade show" role="alert">
-    {{ message }}
-    <button type="button" class="close" data-dismiss="alert">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  {% else %}
-  <div class="alert alert-success alter-dismissable fade show" role="alert">
-    {{ message }}
-    <button type="button" class="close" data-dismiss="alert">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  {% endif %} {% endfor %} {% endif %} {% endwith %}
 
+
+  <link
+  rel="stylesheet"
+  href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+  integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+  crossorigin="anonymous"
+  />
 
 <style>
-
-
-
-
 body{
         font-family: 'Open Sans', sans-serif;
         background-size: 1000% 1000%;
@@ -54,12 +41,25 @@ li a {
   text-decoration: none;
 }
 
+li a:hover{
+  text-decoration: none;
+  color: #4d6784;
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+.sr-only{
+  position: relative;
+    width: 100%; 
+    height: 100%;
+}
+
 .form-signin {
   max-width: 330px;
-  padding: 15px;
   margin: 0 auto;
-  
+  margin-top: 60px;
 }
+
 .form-signin .form-signin-heading,
 .form-signin .checkbox {
   margin-bottom: 30px;
@@ -68,7 +68,8 @@ li a {
   font-weight: normal;
 }
 .form-signin .form-control {
-    margin: 10px 0;
+  padding-bottom: 30px;
+    margin: 5px 0;
   margin-bottom: 10px;
   position: relative;
   height: auto;
@@ -78,14 +79,14 @@ li a {
   padding: 10px;
   font-size: 16px;
   border: none;
-  width: 100%;
+  border-radius: 10px;
 }
 .form-signin .form-control:focus {
+  border-color: #141E30;
   z-index: 2;
 }
 .form-signin input[type="email"], input[type="password"], input[type="username"] {
   margin: 10px 0;
-  margin-bottom: 10px;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
   border: none;
@@ -93,7 +94,7 @@ li a {
 }
 
 .btn{
-  background-color: #141E30;;
+  background-color: #141E30;
   color: white;
   padding: 10px 10px;
   margin: 8px 0;
@@ -103,50 +104,94 @@ li a {
   opacity: 0.9;
   font-size: 16px;
 }
+
+.btn:hover{
+  background-color: #243B55;
+  color: white;
+}
+
+.btn:focus{
+  background-color: #4d6784;
+}
+
+
 hr {  
   height:2px;
   border-width:0;
   background-color: #141E30;
   color: #141E30; 
-  margin-bottom: 25px;  
+  margin-bottom: 30px;  
 }  
-
     </style>
 </head>
 <body>
     <header style="width: 100%; display: flex; color: #141E30; margin-left: 40px; margin-top: 20px;">
         <ul>
             <li style="text-transform: uppercase; font-weight: 800; font-size: 20px;"><a href=""  onclick="myFunction()">NFT-ADDRESS</a></li>
+            <li><a href="{{ url_for('auth.home') }}">Home</a></li>
             <li><a href="{{ url_for('auth.login') }}">Login</a></li>
             <li><a href="{{ url_for('auth.register') }}">Register</a></li>
           </ul>
     </header>
-
-
-
+    {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %} {% for category, message in messages %} {% if category == 'error' %}
+      <div class="alert alert-danger alter-dismissable fade show" role="alert">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      {% else %}
+      <div class="alert alert-success alter-dismissable fade show" role="alert">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      {% endif %} {% endfor %} {% endif %} {% endwith %}
 <div class="container">
 
     <form class="form-signin" method="POST" action = "/login">
-      <h2 class="form-signin-heading" style="color: #141E30; font-size: 35px; text-align: center;">Login</h2><hr>
-      <label for="inputUsername" class="sr-only">Username</label><br>
-      <input type="text" id="inputUsername" name="username" class="form-control" placeholder="Enter username" required autofocus><br>
-      <label for="inputEmail" class="sr-only">Email address</label><br>
-      <input type="email" id="inputEmail" class="form-control" name = "email" placeholder="Enter email-address" required autofocus><br>
-      <label for="inputPassword" class="sr-only">Password </label><br>
+      <h2 class="form-signin-heading" style="color: #141E30; font-weight: 800; font-size: 35px; text-align: center;">Login</h2><hr>
+      <label for="inputUsername" class="sr-only">Username</label>
+      <input type="text" id="inputUsername" name="username" class="form-control" placeholder="Enter username" required autofocus>
+      <label for="inputEmail" class="sr-only">Email address</label>
+      <input type="email" id="inputEmail" class="form-control" name = "email" placeholder="Enter email-address" required autofocus style="border-radius: 10px;">
+      <label for="inputPassword" class="sr-only">Password </label>
       <input type="password" id="inputPassword" class="form-control" name = "password" placeholder="Enter password" required>
       <div class="checkbox">
         <label>
-          <input type="checkbox" value="remember-me">Remember me
+          <input type="checkbox" value="remember-me"> Remember me
         </label>
       </div>
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+      <button class="btn btn-lg btn-block" type="submit">Sign in</button>
     </form>
   </div>
-
+  <div class="container">{% block content %} {% endblock %}</div>
 <script>
     function myFunction() {
       alert("You cannot access the NFT website unless you have logged into your account. \n Please login!");
     }
 </script>
+<script
+  src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+  integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+  crossorigin="anonymous"
+></script>
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+  integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+  crossorigin="anonymous"
+></script>
+<script
+  src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+  integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+  crossorigin="anonymous"
+></script>
+
+<script
+  type="text/javascript"
+  src="{{ url_for('static', filename='index.js') }}"
+></script>
 </body>
 </html>
