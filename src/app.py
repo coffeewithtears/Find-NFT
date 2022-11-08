@@ -47,7 +47,7 @@ def create_app():
 
     @login_manager.user_loader
     def load_user(id):
-        return users.query.get(int(id))
+        return UserInfo.query.get(int(id))
 
     return app
 
@@ -69,7 +69,7 @@ class nft_information(db.Model):
     def checkInDb(cls, nft_address):
         return cls.query.filter_by(address=nft_address).first()
 
-class users(db.Model, UserMixin):
+class UserInfo(db.Model, UserMixin):
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key = True)
     email = db.Column(db.String(150), unique = True)
@@ -132,7 +132,7 @@ def login():
         email = request.form.get('email')
         password = request.form.get('password')
         username = request.form.get('username')
-        user = users.query.filter_by(email = email, username = username).first()
+        user = UserInfo.query.filter_by(email = email, username = username).first()
         if user:
             if check_password_hash(user.password, password):
                 login_user(user, remember = True)
@@ -159,7 +159,7 @@ def register():
         password1 = request.form.get('password1')
         password2 = request.form.get('password2')
 
-        user = users.query.filter_by(email = email).first()
+        user = UserInfo.query.filter_by(email = email).first()
         if user:
             flash('Email already exists', category='error')
         elif len(email) < 4:
@@ -172,7 +172,7 @@ def register():
             flash('Password must be at least than 7 characters.', category = 'error')
         else:
             print(email, username, password1)
-            new_user =users(email=email, username=username, password=generate_password_hash(password1, method = 'sha256'))
+            new_user =UserInfo(email=email, username=username, password=generate_password_hash(password1, method = 'sha256'))
             db.session.add(new_user)
             db.session.commit()
             login_user(new_user, remember=True)
