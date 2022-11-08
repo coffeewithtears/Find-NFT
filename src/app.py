@@ -12,12 +12,11 @@ from flask_login import login_required, current_user
 import requests
 import json
 
-
 from flask_login import UserMixin
 from sqlalchemy.sql import func
 from sqlalchemy.dialects.postgresql import JSON
 
-from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask import  render_template, request, flash, redirect, url_for
 
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -38,8 +37,6 @@ def create_app():
 
     db.init_app(app)
 
-    with app.app_context():
-        db.create_all()
 
     login_manager = LoginManager(app)
     login_manager.login_view = 'login'
@@ -49,17 +46,18 @@ def create_app():
     def load_user(id):
         return UserInfo.query.get(int(id))
 
+    
+    with app.app_context():
+        db.create_all()
+
     return app
 
   
-app = create_app()
 
-
-db.init_app(app)
 class nft_information(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
-    description = db.Column(db.String, nullable=False)
+    address = db.Column(db.String, nullable=False)
 
     def addToDb(self):
         db.session.add(self)
@@ -70,14 +68,15 @@ class nft_information(db.Model):
         return cls.query.filter_by(address=nft_address).first()
 
 class UserInfo(db.Model, UserMixin):
-    __tablename__ = "users"
     id = db.Column(db.Integer, primary_key = True)
     email = db.Column(db.String(150), unique = True)
     password = db.Column(db.String(150))
     username = db.Column(db.String(150))
 
 
+app = create_app()
 
+db.init_app(app)
 
 
 
@@ -87,10 +86,13 @@ class UserInfo(db.Model, UserMixin):
 def home():
     return render_template('home.html', user=current_user)
 
+@app.route('/search_again')
+def search_again():
+    return render_template('create.html', user=current_user)
 
 @app.route('/nft', methods=[ 'GET', 'POST'])
 def nft():
-    args = request.args['nftaddr']
+    args = request.args.get('nftaddr')
 
     url = f"https://solana-gateway.moralis.io/nft/mainnet/{args}/metadata"
 
@@ -103,21 +105,20 @@ def nft():
     }
 
     response = requests.get(url, headers=headers)
-
+    print(args)
     nft = nft_information()
     db_exist = nft.checkInDb(args)
 
     if db_exist:
         payload = db_exist
         return make_response(render_template('index.html', payload=payload))
-
     response2 = response.json()
+    print (response2)
 
     payload = {
 
         "name": response2["name"],
-        "description": response2["metaplex"]["metadataUri"]
-
+        "address" : response2["mint"]
     }
 
     nft = nft_information(**payload)
@@ -136,7 +137,7 @@ def login():
         if user:
             if check_password_hash(user.password, password):
                 login_user(user, remember = True)
-                return redirect(url_for('views.nft'))
+                return render_template("create.html", user=current_user)
             else:
                 flash('Incorrect password, try again', category='error')
         else:
@@ -176,7 +177,7 @@ def register():
             db.session.add(new_user)
             db.session.commit()
             login_user(new_user, remember=True)
-            return redirect(url_for('views.nft'))
+            return render_template("create.html", user=current_user)
 
     return render_template("register.html",user=current_user)
 

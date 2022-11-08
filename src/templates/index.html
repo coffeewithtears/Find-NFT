@@ -57,7 +57,7 @@ ul {
         <header style="width: 100%; display: flex; margin-left: 40px; margin-top: 20px;">
             <ul>
                 <li style="text-transform: uppercase; font-weight: 800; font-size: 20px;">
-                <a href="http://127.0.0.1:5000/nft" style="color: #fff; text-decoration: none;">NFT-ADDRESS</a></li>
+                <a href="{{ url_for('search_again') }}" style="color: #fff; text-decoration: none;">NFT-ADDRESS</a></li>
                 <li><a href="{{ url_for('home') }}">Logout</a></li>
             </ul>
         </header>
@@ -67,9 +67,9 @@ ul {
                 <h1 style="color: #fff; font-size: 50px;">Information about
                     <span class="NFT_main" style="color: #227ba2; text-shadow: 3px 3px 2px #fff;">NFT</span></h1>
             
-        <p style="color: #fff; font-size: 30px;">NFT name: <span style="color: #227ba2;"> {{name}} </span></p>  
+        <p style="color: #fff; font-size: 30px;">NFT name: <span style="color: #227ba2;"> {{payload.name}} </span></p>  
         <p style="color: #fff; font-size: 30px;">All information about NFT: <a href={{imgurl}} style="color: #227ba2; text-decoration: none;">NFT LINK</a></p>
-        <p style="color: #fff; font-size: 30px;">NFT mint: <span style="color: #227ba2;"> {{description}}</span></p>  
+        <p style="color: #fff; font-size: 30px;">NFT mint: <span style="color: #227ba2;"> {{payload.address}}</span></p>  
         </div>
     </main>
 </body>
