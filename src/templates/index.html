@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Information about NFT</title>
+    <style>
+body{
+    font-family: 'Open Sans', sans-serif;
+    background: linear-gradient(45deg, #141E30, #243B55);
+    background-size: 1000% 1000%;
+    animation: gradient 8s ease infinite;
+}
+
+@keyframes gradient {
+    0%{
+    background-position: 0 50%;
+    }
+
+    50%{
+    background-position: 100% 50%;
+    }
+    
+    100%{
+    background-position: 0 50%;
+    }
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+  
+  li {
+    float: left;
+  }
+  
+  li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 30px 30px;
+    font-size: 20px;
+    text-decoration: none;
+  }
+  
+  li a:hover{
+    text-decoration: none;
+    color: #3f6794;
+    transform: scale(1.1);
+    cursor: pointer;
+  }
+</style>
+    <body>
+
+        <header style="width: 100%; display: flex; margin-left: 40px; margin-top: 20px;">
+            <ul>
+                <li style="text-transform: uppercase; font-weight: 800; font-size: 20px;">
+                <a href="http://127.0.0.1:5000/nft" style="color: #fff; text-decoration: none;">NFT-ADDRESS</a></li>
+                <li><a href="{{ url_for('home') }}">Logout</a></li>
+            </ul>
+        </header>
+
+        <main style="display: flex; flex-direction: column; width: 100%;">
+            <div class="main_page" style="text-align: center; padding: 80px 0 60px 0;">
+                <h1 style="color: #fff; font-size: 50px;">Information about
+                    <span class="NFT_main" style="color: #227ba2; text-shadow: 3px 3px 2px #fff;">NFT</span></h1>
+            
+        <p style="color: #fff; font-size: 30px;">NFT name: <span style="color: #227ba2;"> {{name}} </span></p>  
+        <p style="color: #fff; font-size: 30px;">All information about NFT: <a href={{imgurl}} style="color: #227ba2; text-decoration: none;">NFT LINK</a></p>
+        <p style="color: #fff; font-size: 30px;">NFT mint: <span style="color: #227ba2;"> {{description}}</span></p>  
+        </div>
+    </main>
+</body>
+</html>

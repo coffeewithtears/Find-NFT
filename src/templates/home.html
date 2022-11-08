@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FlaskApp Main Page</title>
+    <style>
+    body{
+        font-family: 'Open Sans', sans-serif;
+        background: linear-gradient(45deg, #141E30, #243B55);
+        background-size: 400% 400%;
+        animation: gradient 8s ease infinite;
+    }
+
+@keyframes gradient {
+    0%{
+    background-position: 0 50%;
+    }
+
+    50%{
+    background-position: 100% 50%;
+    }
+    
+    100%{
+    background-position: 0 50%;
+    }
+}
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+  
+  li {
+    float: left;
+  }
+  
+  li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 30px 30px;
+    font-size: 20px;
+    text-decoration: none;
+  }
+  
+  li a:hover{
+    text-decoration: none;
+    color: #3f6794;
+    transform: scale(1.1);
+    cursor: pointer;
+  }
+    </style>
+    <body>
+        <header style="width: 100%; display: flex; color: #141E30; margin-left: 40px; margin-top: 20px;">
+            <ul>
+                <li style="text-transform: uppercase; font-weight: 800; font-size: 20px;"><a href=""  onclick="myFunction()">NFT-ADDRESS</a></li>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('login') }}">Login</a></li>
+                <li><a href="{{ url_for('register') }}">Register</a></li>
+              </ul>
+        </header>
+
+        <main style="display: flex; flex-direction: column; width: 100%;">
+            <div class="main_page" style="text-align: center; padding: 120px 0 50px 0;">
+                    <h1><span class="NFT_main" style="color: #2a5298; text-shadow: 3px 3px 2px #fff; font-size: 100px;">WELCOME!</span>
+                    <h2 style="color:white">Register and find the information you need about NFT</h2></h1>
+                </div>
+                </main>    
+
+
+                <script>
+                  function myFunction() {
+                    alert("You cannot access the NFT website unless you have registered into your account. \n Please register!");
+                  }
+              </script>
+    </body>
+    </html>
